@@ -2,22 +2,45 @@
 let taskList = JSON.parse(localStorage.getItem("tasks"));
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 
-// Retrieve buttons from HTML
-const addBtn = $('#add-btn');
+// //Retrieve tasks inputs from add task form
+// const titleInput = $('#title').val()
+// const dateInput = $('#date').val()
+// const descriptionInput = $('#description').val()
 
-// Todo: create a function to generate a unique task id
-function generateTaskId() {
 
+// A function that generates a unique task id
+function generateTaskId(prefix) {
+    // sets the starting id number
+    let taskIdCounter = 1
+    // concatenates the id number and our prefix parameter ('task') 
+    const uniqueId = prefix + '-' + taskIdCounter;
+    // increments the id number with each task created
+    taskIdCounter++;
+    return uniqueId;
 }
 
 // Todo: create a function to create a task card
 function createTaskCard(task) {
-
+    // create element for the card using jquery + bootstrap
+    const taskCard = $('<div class="card" style="width: 18rem;"><div class="card-body"><h5 class="card-title">Card title</h5><p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p><button type="button" class="btn btn-success mx-auto" id="delete-btn">Delete</button></div></div>');
+    
+    // call generateTaskId function and assign to task card
+    const taskId = generateTaskId('task');
+    // set the attribute of the task card with unique id
+    taskCard.attr('id', taskId)
+    
+    // retrieve parent element
+    const todoDiv = $('#todo-cards');
+    //append taskCard to parent
+    todoDiv.append(taskCard);
+    
+    console.log(taskId);
 }
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
-
+    
+    
 }
 
 // Todo: create a function to handle adding a new task
@@ -39,3 +62,7 @@ function handleDrop(event, ui) {
 $(document).ready(function () {
 
 });
+
+const submitBtn = $('#submit-btn');
+
+submitBtn.on('click', createTaskCard())
