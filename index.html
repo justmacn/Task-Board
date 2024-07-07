@@ -22,35 +22,34 @@
   </header>
   <div class="container">
     <div class="text-center mb-5">
-      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal" id="add-btn">Add Task</button>
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button>
     </div>
-    <!-- Todo: modal added from bootstap -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- modal added from bootstap -->
+    <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title text-start" id="add-modal">Add Task</h5>
+            <h5 class="modal-title text-start" id="modal-h5">Add Task</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="row modal-body">
-            <form>
-              <div class="mb-3">
-                <label for="task-title" class="col-form-label">Recipient:</label>
+          <div class="modal-body">
+            <form class="row">
+              <div class="col-6 mb-3">
+                <label for="task-title" class="col-form-label">Task Title</label>
                 <input type="text" class="form-control" id="task-title">
               </div>
-              <div class="mb-3">
-                <label for="task-date" class="col-form-label">Recipient:</label>
+              <div class="col-6 mb-3">
+                <label for="task-date" class="col-form-label">Task Due Date</label>
                 <input type="text" class="form-control" id="task-date">
               </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">Message:</label>
-                <textarea class="form-control" id="message-text"></textarea>
+              <div class="col-12 mb-3">
+                <label for="message-text" class="col-form-label">Task Description</label>
+                <textarea class="form-control" id="task-text"></textarea>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Send message</button>
+            <button type="button" class="mx-auto btn btn-success" data-bs-dismiss="modal">Add Task</button>
           </div>
         </div>
       </div>
