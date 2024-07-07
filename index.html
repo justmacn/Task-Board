@@ -22,9 +22,40 @@
   </header>
   <div class="container">
     <div class="text-center mb-5">
-      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button>
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal" id="add-btn">Add Task</button>
     </div>
-    <!-- Todo: Create a modal with a form to add tasks -->
+    <!-- Todo: modal added from bootstap -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-start" id="add-modal">Add Task</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="row modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="task-title" class="col-form-label">Recipient:</label>
+                <input type="text" class="form-control" id="task-title">
+              </div>
+              <div class="mb-3">
+                <label for="task-date" class="col-form-label">Recipient:</label>
+                <input type="text" class="form-control" id="task-date">
+              </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label">Message:</label>
+                <textarea class="form-control" id="message-text"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Send message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal above -->
     <div class="row swim-lanes text-center justify-content-between">
       <div class="col-12 col-lg-4 d-flex">
         <div id="to-do" class="card border-light mb-3 lane flex-grow-1">
