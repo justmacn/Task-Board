@@ -7,11 +7,12 @@ let nextId = JSON.parse(localStorage.getItem("nextId"));
 // const dateInput = $('#datepicker').val()
 // const descriptionInput = $('#description').val()
 
+// sets the starting uniqueId number
+let taskIdCounter = 1
 
 // A function that generates a unique task id
 function generateTaskId(prefix) {
-    // sets the starting id number
-    let taskIdCounter = 1
+    
     // concatenates the id number and our prefix parameter ('task') 
     const uniqueId = prefix + '-' + taskIdCounter;
     // increments the id number with each task created
@@ -29,17 +30,19 @@ function createTaskCard(task) {
     // set the attribute of the task card with unique id
     taskCard.attr('id', taskId)
 
-    // retrieve parent element
-    const todoDiv = $('#todo-cards');
-    //append taskCard to parent
-    todoDiv.append(taskCard);
-
-    console.log(taskId);
-}
+};
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
 
+    createTaskCard();
+        
+    // retrieve parent element
+    const todoDiv = $('#todo-cards');
+    //append taskCard to parent
+    todoDiv.append(taskCard);
+    
+    console.log(taskId);
 
 }
 
@@ -61,16 +64,20 @@ function handleDrop(event, ui) {
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
 $(document).ready(function () {
 
-    //adds datepicker
+    // adds datepicker
     $(function () {
         $("#datepicker").datepicker();
     });
 
-    //makes card <div>s droppable
+    // makes card <div> droppable
 
+    // eventListener to call createTaskCard function
+    const submitBtn = $('#submit-btn');
+
+    submitBtn.on('click', function () {
+
+        renderTaskList();
+    });
 
 });
 
-const submitBtn = $('#submit-btn');
-
-submitBtn.on('click', createTaskCard())
