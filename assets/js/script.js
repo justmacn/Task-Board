@@ -1,22 +1,21 @@
-// Retrieve tasks and nextId from localStorage
-let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
-// let nextId = JSON.parse(localStorage.getItem("nextId")) || [];
-
 // Retrieve tasks inputs from add task form
 const titleInput = $('#title');
 const dateInput = $('#date');
 const descriptionInput = $('#description');
 
+function readTasksfromStorage () {
+    let tasks = JSON.parse(localStorage.getItem('tasks'));
+
+  // if localStorage is empty return a 
+  if (!tasks) {
+    tasks = [];
+  }
+  return tasks;
+}
+
 // a function to read the local storage
 function saveTaskstoStorage(tasks) {
     localStorage.setItem('tasks', JSON.stringify(tasks));
-}
-
-
-// A function that generates a unique task id
-function generateTaskId(taskId) {
-    let taskId = crypto.randomUUID(taskId);
-
 }
 
 // Todo: create a function to create a task card
@@ -44,6 +43,8 @@ function createTaskCard(task) {
             taskCard.addClass('bg-danger text-white');
             cardBtn.addClass('border-light');
         }
+    } else if (task.status === 'done') {
+        taskCard.addClass('bg-success text-white');
     }
 
     // append all elements of taskCard to the div
@@ -55,24 +56,21 @@ function createTaskCard(task) {
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
-    const tasks = taskList;
+    const tasks = readTasksfromStorage();
 
     // declare the droppable card lanes where tasks will render
     const todoLane = $('#todo-cards');
-    // todoLane.empty();
     const inProgressLane = $('#in-progress-cards');
-    // inProgressLane.empty();
     const doneLane = $('#done-cards');
-    // doneLane.empty();
 
     // create a taskCard for each task in the taskList array
     for (let task of tasks) {
-        if (tasks.status === 'to-do') {
+        if (task.status === 'to-do') {
             todoLane.append(createTaskCard(task));
-        } else if (project.status === 'in-progress') {
-            inProgressLane.append(createProjectCard(task));
-        } else if (project.status === 'done') {
-            doneLane.append(createProjectCard(task));
+        } else if (task.status === 'in-progress') {
+            inProgressLane.append(createTaskCard(task));
+        } else if (task.status === 'done') {
+            doneLane.append(createTaskCard(task));
         }
     }
 
@@ -87,10 +85,6 @@ function renderTaskList() {
 function handleAddTask(event) {
     event.preventDefault();
 
-    // call the id generator function
-    generateTaskId(taskId);
-
-
     // declare form inputs as variables to gain their values
     const taskTitle = titleInput.val().trim();
     const taskDate = dateInput.val();
@@ -98,7 +92,7 @@ function handleAddTask(event) {
 
     // create an object out of the addTask form values
     const newTask = {
-        id: taskId.val(),
+        id: crypto.randomUUID(),
         title: taskTitle,
         dueDate: taskDate,
         description: taskDescription,
@@ -106,7 +100,7 @@ function handleAddTask(event) {
     };
 
     // pushes new Task to the array
-    const tasks = taskList;
+    const tasks = readTasksfromStorage();
     tasks.push(newTask);
 
     // save newTask to taskList array and render them to page
@@ -121,8 +115,8 @@ function handleAddTask(event) {
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event) {
-    const taskId = $(this).attr('data-project-id');
-    const tasks = taskList;
+    const taskId = $(this).attr('data-task-id');
+    const tasks = readTasksfromStorage();
 
     // this conditional goes through the taskList array and removes the task with the matching id
     tasks.forEach((task) => {
@@ -139,6 +133,21 @@ function handleDeleteTask(event) {
 
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {
+    const tasks = readTasksfromStorage();
+
+    const taskId = ui.draggable[0].dataset.taskId;
+
+    const newStatus = event.target.id;
+
+    for (let task of tasks) {
+
+        if (task.id === taskId) {
+            task.status = newStatus;
+        }
+    }
+
+    saveTaskstoStorage(tasks);
+    renderTaskList();
 
 }
 
@@ -155,9 +164,13 @@ $(document).ready(function () {
     $('.lane').droppable({
         accept: '.draggable',
         drop: handleDrop,
-      });
+    });
 
+    
     const submitBtn = $('#submit-btn');
+    const deleteBtn = $('delete');
 
-    submitBtn.on('click', handleAddTask())
+    submitBtn.on('click', handleAddTask)
+    deleteBtn.on('click', handleDeleteTask)
+
 });
