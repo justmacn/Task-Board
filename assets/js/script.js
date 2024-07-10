@@ -26,7 +26,7 @@ function createTaskCard(task) {
     const cardHeader = $('<div>').addClass('card-header h5').text(task.title);
     const cardBody = $('<div>').addClass('card-body');
     const cardDescription = $('<p>').addClass('card-text text-center').text(task.description);
-    const cardDate = $('<p>').addClass('card-text text-center').text(task.dueDate);
+    const cardDate = $('<p>').addClass('card-text text-center').text('Due: ' + task.dueDate);
     const cardBtn = $('<button>').addClass('btn btn-danger delete mx-auto').attr('data-task-id', task.id).text('Delete');
 
     // this event calls the deleteTask function on click
@@ -127,7 +127,6 @@ function handleDeleteTask(event) {
 
     // saves the updated taskList and renders them to page
     saveTaskstoStorage(tasks);
-    renderTaskList();
 
 }
 
